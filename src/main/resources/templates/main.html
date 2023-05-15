@@ -1,0 +1,71 @@
+<html lang="en" xmlns:th = "http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="maket.html">
+<div layout:fragment="site">
+<button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add Task
+</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form th:action="@{'/addTask'}" method="post">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Item</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group mt-2">
+            <label>
+              Name:
+            </label>
+            <input type="text" class="form-control" name="name">
+          </div>
+          <div class="form-group mt-2">
+            <label>
+              Dead Line:
+            </label>
+            <input type="date" class="form-control" name="deadLine">
+          </div>
+          <div class="form-group mt-2">
+            <label>
+              Completed:
+            </label>
+            <select name="completed" class="form-control">
+              <option th:value="false">No</option>
+              <option th:value="true">Yes</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  <div class="row mt-5">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <td>Id</td>
+          <td>Name</td>
+          <td>Dead Line</td>
+          <td>Completed</td>
+          <td>Details</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="it: ${tasks}">
+          <td th:text="${it.id}" th:class="${it.completed == true?'text-primary':'text-danger'}"></td>
+          <td th:text="${it.name}" th:class="${it.completed == true?'text-primary':'text-danger'}"></td>
+          <td th:text="${it.deadLine}" th:class="${it.completed == true?'text-primary':'text-danger'}"></td>
+          <td th:text="${it.completed?'Yes':'No'}" th:class="${it.completed == true?'text-primary':'text-danger'}"></td>
+          <td><a th:href="@{'details/' + ${it.id}}" class="btn btn-info btn-sm">DETAILS</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</html>
